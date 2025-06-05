@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mt-5">
+  <div class="card container col-md-6 shadow-sm p-4">
+    <h1 class="pt-2 text-center">
+      Login
+    </h1>
+    <hr>
+      {% if data %}
+      <div>{{ data }}</div>
+    {% endif %}
+    <form action="" class="p-2" method="post">
+      {%csrf_token%}
+      <input type="text" class="form-control mb-3" name="username" placeholder="Username" />
+      <input type="password" class="form-control mb-3" name="password" placeholder="password"/>
+      <input type="submit" class="btn btn-outline-primary w-100 mb-3" value="Login">
+      <div class="text-center">
+       
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}

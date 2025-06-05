@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<section style="background-color: #f8f9fa; padding-top: 5rem; min-height: 100vh;">
+  <div class="container">
+
+    <!-- URL Form -->
+    <div class="card shadow-sm mb-5 p-4 border-0 rounded-3 bg-white">
+      <h5 class="mb-3">Shorten a URL</h5>
+      <form class="row g-3" method="post">
+        {% csrf_token %}
+        <div class="col-12">
+          <input type="text" class="form-control" id="staticUrl" name="URL" placeholder="Enter full URL">
+        </div>
+        <div class="col-12">
+          <input type="text" class="form-control" placeholder="Custom alias (optional)" name="Alias">
+        </div>
+        <div class="col-12 text-end">
+          <button type="submit" class="btn btn-primary">Shorten</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Shortened URL Table -->
+    <div class="card shadow-sm p-4 border-0 rounded-3 bg-white">
+      <h5 class="mb-3">Your URLs</h5>
+      <div class="table-responsive">
+        <table class="table table-sm align-middle">
+          <thead class="table-light">
+            <tr>
+              <th>#</th>
+              <th>Original URL</th>
+              <th>Shortened</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for url in request.user.url_set.all %}
+            <tr>
+              <td>{{ forloop.counter }}</td>
+              <td>
+                <input type="text" class="form-control form-control-sm bg-light" value="{{url.target_url}}" title="{{url.target_url}}" readonly>
+              </td>
+              <td class="d-flex align-items-center gap-2">
+                <input type="text" class="form-control form-control-sm bg-light" value="{{domain}}/{{url.alias}}" id="shorted-{{url.id}}" readonly>
+                <button class="btn btn-outline-secondary btn-sm" onclick="copyText('{{url.id}}')" title="Copy">
+                  Copy
+                </button>
+              </td>
+              <td>{{ url.timestamp }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<script>
+function copyText(id){
+  const inputTag = document.getElementById(`shorted-${id}`);
+  inputTag.select();
+  inputTag.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+}
+</script>
+
+{% endblock content %}

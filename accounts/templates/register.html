@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="mt-5">
+  <div class="card container col-md-6 shadow-sm p-4">
+    <h1 class="pt-2 text-center">
+      Register
+    </h1>
+    <hr>
+    <form action="" method="post" class="p-2">
+      {%csrf_token%}
+      <input type="email" value="" name="" required class="form-control mb-3" placeholder="email"/>
+      <input type="text" value="" name="username" required class="form-control mb-3" placeholder="Username"/>
+      
+      <input type="password" required class="form-control mb-3"name="password" placeholder="password"/>
+      <input type="submit" required method="POST" class="btn btn-outline-primary w-100 mb-3" value="Register">
+      <div class="text-center">
+        <a href="#">Forgot Password</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock content %}
